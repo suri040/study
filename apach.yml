@@ -1,0 +1,30 @@
+---
+- name: unarchive the file
+  hosts:  g1
+  remote_user:  ansible
+  become: true
+  become_method:  sudo
+  tasks: 
+  - block: 
+    - name:  Get the setup from internet
+      get_url:  
+        url:  http://mirrors.estointernet.in/apache//httpd/httpd-2.4.39.tar.gz
+        dest: /tmp/
+    - name: get the apache apr from internet
+      get_url:
+        url:  http://mirrors.estointernet.in/apache//apr/apr-1.7.0.tar.gz
+        dest: /tmp/
+    - name: get the appache apr-util from internet
+      get_url:
+        url:  http://mirrors.estointernet.in/apache//apr/apr-util-1.6.1.tar.gz
+        dest: /tmp/
+  - block:
+    - name: unarchive the httpd file
+      unarchive:
+        src_path:
+          - /tmp/httpd/httpd-2.4.39.tar.gz
+          - /tmp/apr-1.7.0.tar.gz
+          - /tmp/apr-util-1.6.1.tar.gz
+        dest: /home/ansibe
+        remote_src: yes
+...

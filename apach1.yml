@@ -1,0 +1,43 @@
+---
+- name: Get the appache and compile the system
+  hosts: g1
+  tasks:
+   - block:
+     - name:  apache web serber
+       unarchive:
+        src:  http://mirrors.estointernet.in/apache//httpd/httpd-2.4.39.tar.gz
+        dest: /home/ansible/
+        remote_src: yes
+     - name: apache util get
+       unarchive:
+        src:  http://mirrors.estointernet.in/apache//apr/apr-1.7.0.tar.gz
+        dest: /home/ansible/
+        remote_src: yes
+     - name: apache apr-util get
+       unarchive:
+        src:  http://mirrors.estointernet.in/apache//apr/apr-util-1.6.1.tar.gz
+        dest: /home/ansible/
+        remote_src: yes
+   - block:
+     - name: create a directory
+       file:
+        path: /home/ansible/httpd-2.4.39/srclib/apr
+        state:  directory
+        mode: '0755'
+     - name: create another direcory
+       file:
+        path:  /home/ansible/httpd-2.4.39/srclib/apr-util
+        state:  directory
+        mode: '0755'
+   - block:
+      - name: move apache apr  under httpd service
+        copy:
+          src: /home/ansible/apr-1.7.0/
+          dest: /home/ansible/httpd-2.4.39/srclib/apr/
+          remote_src: yes
+      - name: move apr-util under httpd service
+        copy:
+          src: /home/ansible/apr-util-1.6.1/
+          dest: /home/ansible/httpd-2.4.39/srclib/apr-util/
+          remote_src: yes
+...

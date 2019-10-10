@@ -1,0 +1,4 @@
+- name: Inclide the enviorent file and set the varaible
+  include: apach1.yml
+  include:  apach2.yml
+  include:  apach3.yml

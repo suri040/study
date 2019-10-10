@@ -1,0 +1,23 @@
+- name: complitaon start here
+  hosts: g1
+  tasks:
+  - block:
+    - name: installing packages
+      yum:
+        name: gcc,make,pcre-devel,pcre,expat-devel
+        state:  latest
+  - block:
+    - name: lets start complilation
+      command:
+        /home/ansible/httpd-2.4.39/configure --prefix=/opt/apache2 --with-included-apr --with-pcre
+  - block:
+    - name: Build the default target
+      make:
+        chdir: /opt/apache2
+    - name: Run 'Install' target as root
+      make: 
+        chdir:  /opt/apache2
+        target: install
+      register: myoutput
+    - debug: 
+        msg:  Installtion output is {{ myoutput }}
