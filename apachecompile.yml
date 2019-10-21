@@ -1,6 +1,6 @@
 ---
 - name: Get the appache and compile the system
-  hosts: g2
+  hosts: localhost
   tasks:
    - block:
      - name:  apache web serber
